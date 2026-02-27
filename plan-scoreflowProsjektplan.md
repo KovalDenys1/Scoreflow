@@ -1,6 +1,6 @@
 # Plan: Scoreflow NBA Website (9-fredag skoleprosjekt)
 
-**TL;DR:** Bygg en MVP NBA-nettside over 9 fredager med disse hovedsidene: **Home**, **Upcoming Games**, **Finished Games**, **Live Games**, og **Players & Stats**. UI skal være på engelsk, responsivt, og klart for demo på F9.
+**TL;DR:** Bygg en MVP NBA-nettside over 9 fredager med disse hovedsidene: **Home**, **Games** (med toggle for Upcoming/Finished/Live), og **Players & Stats**. UI skal være på engelsk, responsivt, og klart for demo på F9.
 
 ---
 
@@ -8,9 +8,7 @@
 
 **Må ha (Priority 1):**
 - ✅ **Home**: Oversikt over status i appen (kommende, live, nylig avsluttede)
-- ✅ **Upcoming Games**: Liste over kommende kamper
-- ✅ **Finished Games**: Liste over ferdigspilte kamper med resultat
-- ✅ **Live Games**: Kamper som pågår nå (med tydelig LIVE-status)
+- ✅ **Games**: Én kampside med toggle mellom Upcoming, Finished og Live (inkludert tydelig LIVE-status)
 - ✅ **Players & Stats**: Søkbar spillerliste med sentrale tall (PTS/REB/AST)
 - ✅ **Responsivt design**: Mobil + desktop
 - ✅ **English language**: All UI-tekst på engelsk
@@ -18,8 +16,8 @@
 
 **Nice-to-have (Priority 2):**
 - 🎯 Favorittspillere (localStorage)
-- 🎯 Team-filter på kampsider
-- 🎯 Auto-refresh på Live-side hvert 30. sekund
+- 🎯 Team-filter på Games-siden
+- 🎯 Auto-refresh på Live-view i Games-siden hvert 30. sekund
 - 🎯 Enkel detaljvisning for spiller (modal/sidepanel)
 
 ---
@@ -68,16 +66,14 @@ Aksent:
 
 **Viktig avgrensning:**
 - Denne kolleksjonen inneholder spiller/statistikk-endepunkter, men ikke tydelige endepunkter for kommende/live/avsluttede kamper.
-- Derfor: kampsider bygges med **mock data som standard** (MVP-sikkert), mens spillerlisten henter fra API med fallback til mock.
+- Derfor: Games-siden bygges med **mock data som standard** (MVP-sikkert), mens spillerlisten henter fra API med fallback til mock.
 
 ---
 
 ## 4. Sider og ruter
 
 - `/` → **Home**
-- `/games/upcoming` → **Upcoming Games**
-- `/games/finished` → **Finished Games**
-- `/games/live` → **Live Games**
+- `/games` → **Games** (toggle: Upcoming/Finished/Live)
 - `/players` → **Players & Stats**
 
 ---
@@ -89,23 +85,24 @@ Aksent:
 1. Prosjektinitialisering (React)
 2. Tailwind-oppsett + fargevariabler
 3. Git-workflow + README + `.gitignore`
-4. Router-oppsett med alle 5 hovedruter
+4. Router-oppsett med alle 3 hovedruter
 5. Navbar-komponent med engelske lenker
 6. Footer + layout wrapper
-7. Mock-datafiler for kamper (kommende/live/avsluttede)
+7. Mock-datafiler for kamper (status: upcoming/live/finished)
 8. Mock-datafiler for spillere med stats
+39. Scoreflow-logo (SVG + PNG + favicon), klar i F1
 
-### **Fase 2: Home + gamesider (F3-F4)**
+### **Fase 2: Home + Games-side (F3-F4)**
 
 9. Home Hero-seksjon
 10. Home status-widgets (kommende/live/avsluttede)
 11. Home: seksjon med utvalgte kamper
 12. Home styling og spacing
-13. Side-layout: Upcoming Games
-14. Side-layout: Finished Games
-15. Side-layout: Live Games
+13. Side-layout: Games
+14. Toggle-komponent (Upcoming/Finished/Live)
+15. Visning/filterlogikk basert på valgt toggle
 16. Gjenbrukbar `GameCard` med statusbadge
-17. Filtre (dato/lag) på kampsider
+17. Filtre (dato/lag) på Games-siden
 18. Empty state når ingen kamper finnes
 
 ### **Fase 3: Players & Stats (F5-F6)**
@@ -123,7 +120,7 @@ Aksent:
 
 ### **Fase 4: Stabilitet, polish, deploy (F7-F9)**
 
-29. Live-side refresh-strategi (manuell + valgfri polling)
+29. Live-view refresh-strategi i Games-siden (manuell + valgfri polling)
 30. Synk Home-tall med kamplister
 31. Caching av siste vellykkede data (localStorage)
 32. Responsiv testing (mobil/nettbrett/desktop)
@@ -136,29 +133,41 @@ Aksent:
 
 ---
 
-## 6. Fordeling per person
+## 6. Fordeling per person (uavhengig arbeid +/-)
 
 ### **Artem** (9 oppgaver)
-- 1, 5, 13, 16, 20, 29, 32, 36, 38
+- Oppgaver: 1, 5, 13, 16, 20, 29, 32, 36, 38
+- Spor: App-shell + Games-presentasjon + deploy.
+- Leverer uavhengig: layout/nav, `GameCard` UI, live-refresh UI, deployment.
 
-### **Denys** (9 oppgaver)
-- 2, 4, 9, 10, 14, 24, 25, 30, 37
+### **Denys** (10 oppgaver)
+- Oppgaver: 2, 4, 9, 10, 14, 24, 25, 30, 37, 39
+- Spor: Branding + Home + API-adapter.
+- Leverer uavhengig: tema/fargevariabler, Home-widgets, `nbaApi` service, logo i F1.
 
 ### **Ayanle** (9 oppgaver)
-- 7, 8, 11, 19, 22, 26, 27, 33, 35
+- Oppgaver: 7, 8, 11, 19, 22, 26, 27, 33, 35
+- Spor: Data + Players-flyt.
+- Leverer uavhengig: mock-data kontrakt, Players UI, API query/fallback, browser-test.
 
 ### **Daris** (9 oppgaver)
-- 3, 6, 12, 15, 17, 18, 21, 23, 34
+- Oppgaver: 3, 6, 12, 15, 17, 18, 21, 23, 34
+- Spor: Repo-kvalitet + interaksjoner.
+- Leverer uavhengig: git-oppsett, layout-polish, filters/paginering/a11y.
 
-**Notat:** Alle gjør code reviews på hverandres PR-er.
+**Kontrakter for parallelt arbeid (lav avhengighet):**
+- Game-data format låses i F2: `id`, `status`, `homeTeam`, `awayTeam`, `startTime`, `score`.
+- Player-data format låses i F2: `name`, `team`, `pts`, `reb`, `ast`.
+- Felles UI-komponenter holdes i `components/`; sidespesifikk kode holdes i egne mapper.
+- Integrasjon skjer via PR + review, ikke direkte push til `main`.
 
 ---
 
 ## 7. Plan per fredag (F1-F9)
 
 ### **F1: Kickoff + setup**
-- Oppgaver: 1-4
-- **Milepæl:** Prosjekt kjører lokalt med routing
+- Oppgaver: 1-4, 39
+- **Milepæl:** Prosjekt kjører lokalt med routing + første logo er klar
 
 ### **F2: Layout + datafundament**
 - Oppgaver: 5-8
@@ -168,9 +177,9 @@ Aksent:
 - Oppgaver: 9-12
 - **Milepæl:** Home viser status og utvalgte kamper
 
-### **F4: Kampsider**
+### **F4: Games-side**
 - Oppgaver: 13-18
-- **Milepæl:** Upcoming/Finished/Live er ferdig med mock-data
+- **Milepæl:** Games-side med Upcoming/Finished/Live-toggle er ferdig med mock-data
 
 ### **F5: Spillerside UI**
 - Oppgaver: 19-23
@@ -182,7 +191,7 @@ Aksent:
 
 ### **F7: Stabilitet**
 - Oppgaver: 29-31
-- **Milepæl:** Live/Home-data flyt stabil
+- **Milepæl:** Games/Home-data flyt stabil
 
 ### **F8: Testing + kvalitet**
 - Oppgaver: 32-35
@@ -201,7 +210,7 @@ Aksent:
 - **Tiltak:** bygg robust `try/catch` i API-service
 
 ### Risiko 2: Ingen kamp-endepunkter i valgt API
-- **Plan B:** kampsider drives av mock-data i MVP
+- **Plan B:** Games-siden drives av mock-data i MVP
 - **Tiltak:** legg til nytt game-API kun hvis tid og stabil kilde finnes
 
 ### Risiko 3: Fravær i teamet
@@ -219,20 +228,14 @@ Aksent:
 - [ ] Har engelsk tekst
 - [ ] Ingen console errors
 
-### **Upcoming Games**
-- [ ] Viser kommende kamper med dato/tid og lag
+### **Games**
+- [ ] Har toggle for Upcoming/Finished/Live
+- [ ] Upcoming viser kommende kamper med dato/tid og lag
+- [ ] Finished viser ferdige kamper med sluttresultat (vinner/taper tydelig)
+- [ ] Live viser kun live-kamper med tydelig LIVE-badge
+- [ ] Har refresh-løsning for Live-view
 - [ ] Fungerer responsivt
 - [ ] Har empty state
-
-### **Finished Games**
-- [ ] Viser ferdige kamper med sluttresultat
-- [ ] Vinner/taper vises tydelig
-- [ ] Fungerer responsivt
-
-### **Live Games**
-- [ ] Viser kun kamper med live-status
-- [ ] LIVE-badge er tydelig
-- [ ] Har refresh-løsning
 
 ### **Players & Stats**
 - [ ] Viser minst navn, lag, PTS, REB, AST

@@ -26,7 +26,7 @@
 
 ### Fargepalett: "NBA Dark Court"
 
-```
+```text
 Hovedfarger:
 - Bakgrunn (mørk):      #0F1419
 - Sekundær bakgrunn:    #1A1F2E
@@ -57,16 +57,19 @@ Aksent:
 
 ### API-strategi (oppdatert)
 
-**Primær spiller-API (fra deres Postman-link):**
-- Dokumentasjon: `https://documenter.getpostman.com/view/24232555/2s93shzpR3`
-- Eksempler fra kolleksjonen:
-  - `GET /api/PlayerDataAdvancedPlayoffs/name/{playerName}`
-  - `GET /api/PlayerDataAdvancedPlayoffs/season/{season}`
-  - `GET /api/PlayerDataTotals/query?...`
+**Primær NBA-API (balldontlie):**
+- Dokumentasjon: `https://nba.balldontlie.io/?shell#nba-api`
+- Base URL: `https://api.balldontlie.io/v1`
+- Auth: `Authorization: <API_KEY>`
+- Relevante endepunkter i MVP:
+  - `GET /players`
+  - `GET /games`
+  - `GET /stats`
+  - `GET /teams` (valgfritt)
 
 **Viktig avgrensning:**
-- Denne kolleksjonen inneholder spiller/statistikk-endepunkter, men ikke tydelige endepunkter for kommende/live/avsluttede kamper.
-- Derfor: Games-siden bygges med **mock data som standard** (MVP-sikkert), mens spillerlisten henter fra API med fallback til mock.
+- Vi bruker API-first for både Games og Players.
+- Mock-data beholdes som fallback ved API-feil/rate limits og for rask UI-utvikling tidlig i prosjektet.
 
 ---
 
@@ -113,10 +116,10 @@ Aksent:
 22. `PlayerStatCard` / tabellrad-komponent
 23. Enkel paginering
 24. API-service `src/services/nbaApi.js`
-25. Integrasjon: hent spillere etter season
-26. Integrasjon: query-endepunkt med parametre
-27. Fallback-logikk: API -> mock
-28. Loading + error handling for spillerdata
+25. Integrasjon: hent spillere fra `/v1/players` (med relevante query-parametre)
+26. Integrasjon: hent kamper fra `/v1/games` og map til Upcoming/Finished/Live
+27. Fallback-logikk: API -> mock (både spillere og kamper)
+28. Loading + error handling for API-data
 
 ### **Fase 4: Stabilitet, polish, deploy (F7-F9)**
 
@@ -187,7 +190,7 @@ Aksent:
 
 ### **F6: API-integrasjon spillere**
 - Oppgaver: 24-28
-- **Milepæl:** Spillerside henter data fra API med fallback
+- **Milepæl:** Spillerside og Games-data henter fra API med fallback
 
 ### **F7: Stabilitet**
 - Oppgaver: 29-31
@@ -205,13 +208,13 @@ Aksent:
 
 ## 8. Risiko & Plan B
 
-### Risiko 1: Spiller-API er tregt/utilgjengelig
-- **Plan B:** alltid fallback til mock for spillerlisten
+### Risiko 1: balldontlie API er tregt/utilgjengelig eller rate-limited
+- **Plan B:** fallback til mock for både spillere og kamper
 - **Tiltak:** bygg robust `try/catch` i API-service
 
-### Risiko 2: Ingen kamp-endepunkter i valgt API
-- **Plan B:** Games-siden drives av mock-data i MVP
-- **Tiltak:** legg til nytt game-API kun hvis tid og stabil kilde finnes
+### Risiko 2: API-felt eller statusmapping endres
+- **Plan B:** hold mapping-lag isolert i service + fallback til mock
+- **Tiltak:** skriv tydelig mapper-funksjon for Upcoming/Finished/Live
 
 ### Risiko 3: Fravær i teamet
 - **Plan B:** små oppgaver, lett overtakelse mellom elever
@@ -233,6 +236,7 @@ Aksent:
 - [ ] Upcoming viser kommende kamper med dato/tid og lag
 - [ ] Finished viser ferdige kamper med sluttresultat (vinner/taper tydelig)
 - [ ] Live viser kun live-kamper med tydelig LIVE-badge
+- [ ] API-data med fallback til mock
 - [ ] Har refresh-løsning for Live-view
 - [ ] Fungerer responsivt
 - [ ] Har empty state

@@ -1,0 +1,21 @@
+{
+  "config": {
+    "default": true,
+    "MD013": false,
+    "MD022": false,
+    "MD029": false,
+    "MD032": false,
+    "MD041": false
+  },
+  "globs": [
+    "README.md",
+    "CONTRIBUTING.md",
+    "plan-scoreflowProsjektplan.md",
+    "docs/**/*.md",
+    ".github/**/*.md"
+  ],
+  "ignores": [
+    "node_modules/**",
+    "dist/**"
+  ]
+}

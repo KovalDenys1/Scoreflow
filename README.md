@@ -10,6 +10,9 @@ Current scope:
 Main project plan:
 - [plan-scoreflowProsjektplan.md](./plan-scoreflowProsjektplan.md)
 
+API source:
+- [docs/api.md](./docs/api.md)
+
 ## Team Workflow
 
 1. Pull latest `main`.
@@ -22,7 +25,7 @@ Main project plan:
 5. At least one teammate review before merge.
 6. Merge only after CI is green.
 
-## Local Setup (when app scaffold is added)
+## Local Setup
 
 ```bash
 npm install
@@ -31,8 +34,23 @@ npm run dev
 
 Common scripts (if present in `package.json`):
 - `npm run lint`
+- `npm run lint:md`
 - `npm run test`
 - `npm run build`
+
+## API Config
+
+We use `balldontlie` NBA API.
+
+Create `.env.local`:
+
+```bash
+VITE_BALLDONTLIE_API_KEY=your_api_key_here
+VITE_BALLDONTLIE_BASE_URL=https://api.balldontlie.io/v1
+```
+
+Reference:
+- `docs/api.md`
 
 ## Branch Rules (recommended)
 

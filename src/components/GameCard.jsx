@@ -10,13 +10,13 @@ function formatTime(isoString) {
 
 export default function GameCard({ game }) {
   const { status, homeTeam, awayTeam, score, startTime } = game;
+  const scoreLabel =
+    status === "upcoming" ? formatTime(startTime) : status === "live" ? "Live Score" : "Final Score";
 
   return (
     <div className="bg-surface border border-border rounded-lg p-4 shadow-sm hover:bg-card transition-colors duration-200 flex flex-col">
       <div className="flex justify-between items-center mb-4">
-        <span className="text-xs text-text-secondary font-medium">
-          {status === 'upcoming' ? formatTime(startTime) : 'Final Score'}
-        </span>
+        <span className="text-xs text-text-secondary font-medium">{scoreLabel}</span>
         <Badge status={status} />
       </div>
 

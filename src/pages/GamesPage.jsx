@@ -25,7 +25,7 @@ function GamesPage() {
           <h1 className="text-3xl font-bold text-text-primary">Games</h1>
           <p className="mt-2 text-text-secondary">Switch between upcoming, live, and finished games.</p>
         </div>
-        
+
         {/* Tabs */}
         <div className="flex bg-surface p-1 rounded-lg border border-border w-fit">
           {tabs.map((tab) => (
@@ -46,9 +46,9 @@ function GamesPage() {
       </div>
 
       {filteredGames.length === 0 ? (
-        <EmptyState 
+        <EmptyState
           icon={CalendarX2}
-          message={`No ${activeTab} games found for this date.`} 
+          message={`No ${activeTab} games found for this date.`}
         />
       ) : (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">

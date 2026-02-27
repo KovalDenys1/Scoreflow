@@ -38,7 +38,7 @@ function PlayersPage() {
       </div>
 
       {filteredPlayers.length === 0 ? (
-        <EmptyState 
+        <EmptyState
           icon={Users}
           message={`No players found matching "${searchQuery}".`}
           action={{

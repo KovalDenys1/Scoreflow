@@ -26,7 +26,7 @@
 5. Add team members with correct roles:
    - Maintainers: admin/write as needed
    - Contributors: write
-6. Add `CODEOWNERS` after final GitHub usernames are confirmed.
+6. Verify all users listed in `CODEOWNERS` have `write` access.
 
 ## Optional (recommended next)
 

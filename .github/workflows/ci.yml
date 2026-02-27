@@ -32,6 +32,7 @@ jobs:
         run: |
           if [ -f package.json ]; then
             npm run lint --if-present
+            npm run lint:md --if-present
           else
             echo "No package.json yet, skipping lint."
           fi

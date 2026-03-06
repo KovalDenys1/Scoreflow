@@ -23,7 +23,8 @@ export default function Navbar() {
             <Link to="/" className="flex items-center gap-2">
               <img
                 src="/branding/scoreflow-logo-ballmark.svg"
-                alt="Scoreflow"
+                alt=""
+                aria-hidden="true"
                 className="h-9 w-9"
               />
               <span className="sr-only">Scoreflow home</span>

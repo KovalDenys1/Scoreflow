@@ -1,8 +1,9 @@
-import { useMemo, useState } from "react";
-import { games } from "../data/mockData";
+import { useMemo, useState, useEffect } from "react";
+import { games as mockGames } from "../data/mockData";
 import GameCard from "../components/GameCard";
 import EmptyState from "../components/EmptyState";
 import { CalendarX2 } from "lucide-react";
+import { BalldontlieAPI } from "../services/nbaApi";
 
 const tabs = [
   { key: "upcoming", label: "Upcoming" },
@@ -12,10 +13,25 @@ const tabs = [
 
 function GamesPage() {
   const [activeTab, setActiveTab] = useState("upcoming");
+  const [games, setGames] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  // pull key from env
+  const apiKey = import.meta.env.VITE_BALLDONTLIE_API_KEY;
+  const api = useMemo(() => new BalldontlieAPI({ apiKey }), [apiKey]);
+
+  useEffect(() => {
+    setLoading(true);
+    api
+      .fetchGames({ per_page: 100 })
+      .then((resp) => setGames(resp.data || []))
+      .catch(() => setGames(mockGames))
+      .finally(() => setLoading(false));
+  }, [api]);
 
   const filteredGames = useMemo(
     () => games.filter((game) => game.status === activeTab),
-    [activeTab]
+    [activeTab, games]
   );
 
   return (
@@ -45,7 +61,9 @@ function GamesPage() {
         </div>
       </div>
 
-      {filteredGames.length === 0 ? (
+      {loading ? (
+        <p className="text-center">Loading games...</p>
+      ) : filteredGames.length === 0 ? (
         <EmptyState
           icon={CalendarX2}
           message={`No ${activeTab} games found for this date.`}

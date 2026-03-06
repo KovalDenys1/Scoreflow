@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Dribbble } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -20,9 +20,13 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex-shrink-0 flex items-center">
-            <Link to="/" className="flex items-center gap-2 text-primary font-bold text-xl">
-              <Dribbble className="w-6 h-6" />
-              Scoreflow
+            <Link to="/" className="flex items-center gap-2">
+              <img
+                src="/branding/scoreflow-logo-ballmark.svg"
+                alt="Scoreflow"
+                className="h-9 w-9"
+              />
+              <span className="sr-only">Scoreflow home</span>
             </Link>
           </div>
 

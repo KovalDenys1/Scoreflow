@@ -7,11 +7,16 @@ function PlayerCard({ player }) {
       <h2 className="text-lg font-semibold text-text-primary">
         {player.name}
       </h2>
-
+      <div className=" flex justify-between ">
       <p className="text-sm text-gray-400">
         Team: {player.team }
       </p>
 
+       <p className="text-sm text-gray-400">
+        jersey: {player.jersey_number} 
+      </p>
+
+      </div>
       <div className="mt-3 flex gap-4 text-sm text-text-muted">
 
       <span>PTS: {player.pts}</span>
